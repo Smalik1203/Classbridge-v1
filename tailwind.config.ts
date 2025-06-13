@@ -20,8 +20,7 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["'Neco Deco'", "sans-serif"],
-        neco: ["'Neco Deco'", "sans-serif"],
+        sans: ["'Inter'", 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
