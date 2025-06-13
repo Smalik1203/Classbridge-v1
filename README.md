@@ -1,41 +1,32 @@
-# Classbridge UI
+# Classbridge
 
-This project contains the Classbridge web interface built with React, TypeScript and Tailwind CSS.
+A modern learning management interface built with React, TypeScript and Tailwind CSS.
 
 ## Prerequisites
-
-- Node.js 18+
-- pnpm, npm or yarn package manager
+- Node.js >= 18
+- npm
 
 ## Getting Started
 
-Install dependencies and start the development server:
-
+Install dependencies:
 ```bash
 npm install
+```
+
+Start the development server:
+```bash
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`.
-
-## Building for Production
-
-Run the build script to generate the production bundle:
-
-```bash
-npm run build
-```
-
-The output will be placed in the `dist` directory.
-
-## Running Tests
-
-This project uses [Vitest](https://vitest.dev/) and React Testing Library for component tests. Execute:
-
+Run tests:
 ```bash
 npm test
 ```
 
-## License
+Build for production:
+```bash
+npm run build
+```
 
+## License
 This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
