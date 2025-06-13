@@ -19,23 +19,16 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/hooks/use-theme';
-import { UserRole } from '@/types';
 
-interface NavItem {
-  title: string;
-  icon: React.ReactNode;
-  href: string;
-  roles: UserRole[];
-}
-
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }) => {
   const { user, logout, checkAccess } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const [open, setOpen] = React.useState(false);
+  const [collapsed, setCollapsed] = React.useState(true);
 
-  const navItems: NavItem[] = [
+  const navItems = [
     { title: 'Dashboard', icon: <Book size={20} />, href: '/dashboard', roles: ['super_admin', 'school_admin', 'teacher', 'student'] },
     { title: 'Attendance', icon: <Calendar size={20} />, href: '/attendance', roles: ['super_admin', 'school_admin', 'teacher', 'student'] },
     { title: 'Fees', icon: <DollarSign size={20} />, href: '/fees', roles: ['super_admin', 'school_admin', 'student'] },
@@ -52,7 +45,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Mobile header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b md:hidden">
+      <header className="sticky top-0 z-40 bg-gradient-to-r from-primary to-secondary text-primary-foreground backdrop-blur-sm border-b md:hidden">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Sheet open={open} onOpenChange={setOpen}>
@@ -80,7 +73,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     <a
                       key={index}
                       href={item.href}
-                      className={`nav-item rounded-md ${location.pathname === item.href ? 'bg-primary/10 text-primary font-medium' : 'text-foreground/70 hover:text-foreground hover:bg-muted/60'}`}
+                      className={`flex items-center gap-3 p-2 rounded-md transition-colors ${location.pathname === item.href ? 'bg-primary text-primary-foreground font-medium' : 'text-foreground/70 hover:bg-muted/60 hover:text-foreground'}`}
                       onClick={(e) => {
                         e.preventDefault();
                         setOpen(false);
@@ -121,27 +114,38 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Desktop layout */}
       <div className="flex-1 flex">
-        <aside className="fixed hidden md:flex h-screen w-64 flex-col border-r bg-sidebar">
+        <aside
+          className={`fixed hidden md:flex h-screen ${collapsed ? 'w-20' : 'w-64'} flex-col border-r bg-gradient-to-b from-primary to-secondary text-primary-foreground transition-all duration-300`}
+        >
+          <button
+            className="absolute top-4 right-4 p-1 rounded-md hover:bg-primary/20"
+            onClick={() => setCollapsed(!collapsed)}
+            aria-label="Toggle sidebar"
+          >
+            {collapsed ? <Menu size={18} /> : <X size={18} />}
+          </button>
           <div className="p-6">
             <div className="flex items-center gap-2">
-              <img src="/logo.png" alt="Logo" className="h-20 w-auto" />
-              <h1 className="text-xl font-bold text-primary">Classbridge</h1>
+              <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+              {!collapsed && (
+                <h1 className="text-xl font-bold text-primary">Classbridge</h1>
+              )}
             </div>
           </div>
-          <nav className="flex-1 overflow-auto py-4 px-4">
+          <nav className="flex-1 overflow-auto py-4 px-2">
             <div className="space-y-1.5">
               {filteredNavItems.map((item, index) => (
                 <a
                   key={index}
                   href={item.href}
-                  className={`nav-item rounded-md ${location.pathname === item.href ? 'bg-primary/10 text-primary font-medium' : 'text-foreground/70 hover:text-foreground hover:bg-muted/60'}`}
+                  className={`flex items-center gap-3 p-2 rounded-md transition-colors ${location.pathname === item.href ? 'bg-primary text-primary-foreground font-medium' : 'text-foreground/70 hover:bg-muted/60 hover:text-foreground'}`}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate(item.href);
                   }}
                 >
                   {item.icon}
-                  <span>{item.title}</span>
+                  {!collapsed && <span className="whitespace-nowrap">{item.title}</span>}
                 </a>
               ))}
             </div>
@@ -182,7 +186,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </div>
         </aside>
-        <main className="flex-1 md:ml-64 bg-muted/20">
+        <main className={`flex-1 ${collapsed ? 'md:ml-20' : 'md:ml-64'} bg-muted/20`}>
           <div className="container py-6 md:py-8 px-4 md:px-8">{children}</div>
         </main>
       </div>
