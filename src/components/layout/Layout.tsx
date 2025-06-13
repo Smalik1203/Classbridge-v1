@@ -52,7 +52,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Mobile header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b md:hidden">
+      <header className="sticky top-0 z-40 bg-gradient-to-r from-primary to-secondary text-primary-foreground backdrop-blur-sm border-b md:hidden">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Sheet open={open} onOpenChange={setOpen}>
@@ -121,7 +121,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
       {/* Desktop layout */}
       <div className="flex-1 flex">
-        <aside className="fixed hidden md:flex h-screen w-64 flex-col border-r bg-sidebar">
+        <aside className="fixed hidden md:flex h-screen w-64 flex-col border-r bg-gradient-to-b from-primary to-secondary text-primary-foreground">
           <div className="p-6">
             <div className="flex items-center gap-2">
               <img src="/logo.png" alt="Logo" className="h-20 w-auto" />
