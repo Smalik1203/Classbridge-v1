@@ -1,21 +1,13 @@
 import React from 'react'
 
-type ErrorBoundaryProps = {
-  children: React.ReactNode
-}
-
-type ErrorBoundaryState = {
-  hasError: boolean
-}
-
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false }
+export class ErrorBoundary extends React.Component {
+  state = { hasError: false }
 
   static getDerivedStateFromError() {
     return { hasError: true }
   }
 
-  componentDidCatch(error: Error, info: React.ErrorInfo) {
+  componentDidCatch(error, info) {
     console.error('Unexpected error:', error, info)
   }
 

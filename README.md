@@ -1,6 +1,6 @@
 # Classbridge
 
-A modern learning management interface built with React, TypeScript and Tailwind CSS.
+A modern learning management interface built with React and Tailwind CSS.
 
 ## Prerequisites
 - Node.js >= 18
