@@ -10,8 +10,8 @@ import { CreditCard, DollarSign, Wallet } from 'lucide-react';
 
 const Fees = () => {
   const { user } = useAuth();
-  const [selectedStudent, setSelectedStudent] = useState<string>('');
-  const [paymentAmount, setPaymentAmount] = useState<string>('');
+  const [selectedStudent, setSelectedStudent] = useState('');
+  const [paymentAmount, setPaymentAmount] = useState('');
   
   // Mock data - would be fetched from API in a real application
   const students = [

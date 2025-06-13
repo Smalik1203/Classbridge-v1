@@ -1,22 +1,12 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/components/ui/use-toast';
-import { User, UserRole } from '@/types';
 
-interface AuthContextType {
-  user: User | null;
-  isLoading: boolean;
-  login: (userId: string, password: string) => Promise<void>;
-  logout: () => void;
-  isAuthenticated: boolean;
-  checkAccess: (allowedRoles: UserRole[]) => boolean;
-}
+const AuthContext = createContext(undefined);
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -40,13 +30,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     checkSession();
   }, []);
 
-  const login = async (userId: string, password: string) => {
+  const login = async (userId, password) => {
     setIsLoading(true);
     try {
       // Mock login - in real app, use Supabase auth
       // This is just for demonstration
       if (userId === 'admin' && password === 'password') {
-        const mockUser: User = {
+        const mockUser = {
           id: '1',
           email: 'admin@example.com',
           name: 'Super Admin',
@@ -60,7 +50,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
         navigate('/dashboard');
       } else if (userId === 'school' && password === 'password') {
-        const mockUser: User = {
+        const mockUser = {
           id: '2',
           email: 'school@example.com',
           name: 'School Admin',
@@ -75,7 +65,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
         navigate('/dashboard');
       } else if (userId === 'teacher' && password === 'password') {
-        const mockUser: User = {
+        const mockUser = {
           id: '3',
           email: 'teacher@example.com',
           name: 'Teacher User',
@@ -90,7 +80,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
         navigate('/dashboard');
       } else if (userId === 'student' && password === 'password') {
-        const mockUser: User = {
+        const mockUser = {
           id: '4',
           email: 'student@example.com',
           name: 'Student User',
@@ -134,7 +124,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
-  const checkAccess = (allowedRoles: UserRole[]): boolean => {
+  const checkAccess = (allowedRoles) => {
     if (!user) return false;
     return allowedRoles.includes(user.role);
   };

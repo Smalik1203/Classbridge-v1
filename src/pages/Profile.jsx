@@ -27,7 +27,7 @@ const Profile = () => {
     joinDate: '2023-01-15',
   };
   
-  const getInitials = (name: string) => {
+  const getInitials = (name) => {
     return name.split(' ').map(n => n[0]).join('').toUpperCase();
   };
   

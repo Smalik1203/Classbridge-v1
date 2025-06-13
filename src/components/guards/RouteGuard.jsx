@@ -2,15 +2,9 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { UserRole } from '@/types';
 
-interface RouteGuardProps {
-  children: React.ReactNode;
-  allowedRoles?: UserRole[];
-}
-
-const RouteGuard: React.FC<RouteGuardProps> = ({ 
-  children, 
+const RouteGuard = ({
+  children,
   allowedRoles = ['super_admin', 'school_admin', 'teacher', 'student']
 }) => {
   const { user, isLoading, checkAccess } = useAuth();

@@ -11,8 +11,8 @@ import { format } from 'date-fns';
 
 const Attendance = () => {
   const { user } = useAuth();
-  const [selectedClass, setSelectedClass] = useState<string>('');
-  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), 'yyyy-MM-dd'));
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedDate, setSelectedDate] = useState(format(new Date(), 'yyyy-MM-dd'));
   
   // Mock data - would be fetched from API in a real application
   const classes = [
@@ -38,7 +38,7 @@ const Attendance = () => {
     { date: '2023-09-05', status: true },
   ];
 
-  const handleStatusChange = (studentId: string, newStatus: boolean) => {
+  const handleStatusChange = (studentId, newStatus) => {
     console.log(`Changed status of student ${studentId} to ${newStatus}`);
     // In real app, this would update the database
   };

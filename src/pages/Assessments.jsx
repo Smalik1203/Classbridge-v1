@@ -6,48 +6,27 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Award, BookOpen, CheckCircle, FileText } from 'lucide-react';
-import { UserRole } from '@/types';
 
-// Define types for our component's data
-interface ClassInfo {
-  id: string;
-  name: string;
-}
-
-interface SubjectInfo {
-  id: string;
-  name: string;
-}
-
-interface StudentMarks {
-  [key: string]: number;
-}
-
-interface StudentInfo {
-  id: string;
-  name: string;
-  marks: StudentMarks;
-}
 
 const Assessments = () => {
   const { user } = useAuth();
-  const [selectedClass, setSelectedClass] = useState<string>('');
-  const [selectedSubject, setSelectedSubject] = useState<string>('');
-  
-  const classes: ClassInfo[] = [
+  const [selectedClass, setSelectedClass] = useState('');
+  const [selectedSubject, setSelectedSubject] = useState('');
+
+  const classes = [
     { id: 'class1', name: 'Class 6A' },
     { id: 'class2', name: 'Class 7B' },
     { id: 'class3', name: 'Class 8C' },
   ];
   
-  const subjects: SubjectInfo[] = [
+  const subjects = [
     { id: 'sub1', name: 'Mathematics' },
     { id: 'sub2', name: 'Science' },
     { id: 'sub3', name: 'English' },
     { id: 'sub4', name: 'Social Studies' }
   ];
   
-  const students: StudentInfo[] = [
+  const students = [
     { id: '1', name: 'Alice Johnson', marks: { sub1: 92, sub2: 88, sub3: 78, sub4: 85 } },
     { id: '2', name: 'Bob Smith', marks: { sub1: 75, sub2: 82, sub3: 90, sub4: 77 } },
     { id: '3', name: 'Charlie Brown', marks: { sub1: 88, sub2: 91, sub3: 85, sub4: 92 } },
@@ -58,12 +37,12 @@ const Assessments = () => {
   };
 
   // Helper function to safely get marks
-  const getStudentMark = (student: StudentInfo, subjectId: string): number | null => {
+  const getStudentMark = (student, subjectId) => {
     return student.marks[subjectId] !== undefined ? student.marks[subjectId] : null;
   };
 
   // Get grade based on marks
-  const getGrade = (marks: number | null): string => {
+  const getGrade = (marks) => {
     if (marks === null) return 'N/A';
     if (marks < 60) return 'F';
     if (marks < 70) return 'D';
@@ -73,7 +52,7 @@ const Assessments = () => {
   };
 
   // Get remarks based on marks
-  const getRemarks = (marks: number | null): string => {
+  const getRemarks = (marks) => {
     if (marks === null) return 'No data';
     if (marks >= 90) return 'Excellent';
     if (marks >= 80) return 'Very Good';

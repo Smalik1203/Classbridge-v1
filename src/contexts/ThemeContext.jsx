@@ -1,22 +1,14 @@
 import * as React from "react";
 import { createContext, useState, useEffect } from "react";
 
-type Theme = 'light' | 'dark';
+export const ThemeContext = createContext(undefined);
 
-export interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-// Create the theme context
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const ThemeProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>('light');
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     // Check for saved theme in localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    const savedTheme = localStorage.getItem('theme');
     
     // Check if theme exists in localStorage, otherwise check system preference
     if (savedTheme) {

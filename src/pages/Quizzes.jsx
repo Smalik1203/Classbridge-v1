@@ -10,74 +10,23 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookOpen, Clock, Award, CheckCircle, XCircle, BarChart } from 'lucide-react';
 
-// Define types for the data structures
-interface Subject {
-  id: string;
-  name: string;
-}
-
-interface AvailableQuiz {
-  id: string;
-  title: string;
-  subject: string;
-  class: string;
-  timeLimit: number;
-  totalQuestions: number;
-  dueDate: string;
-  active: boolean;
-}
-
-interface CompletedQuiz {
-  id: string;
-  title: string;
-  subject: string;
-  class: string;
-  totalQuestions: number;
-  correctAnswers: number;
-  score: number;
-  completedDate: string;
-  timeSpent: number;
-}
-
-interface TeacherQuiz {
-  id: string;
-  title: string;
-  subject: string;
-  class: string;
-  active: boolean;
-  dueDate: string;
-  totalStudents: number;
-  studentsCompleted: number;
-  averageScore: number;
-}
-
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: {
-    id: string;
-    text: string;
-  }[];
-  correctAnswer: string;
-}
-
 const Quizzes = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('available');
-  const [selectedQuiz, setSelectedQuiz] = useState<string | null>(null);
+  const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [quizInProgress, setQuizInProgress] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string>>({});
+  const [selectedAnswers, setSelectedAnswers] = useState({});
   
   // Mock data - would be fetched from API in a real application
-  const subjects: Subject[] = [
+  const subjects = [
     { id: 'sub1', name: 'Mathematics' },
     { id: 'sub2', name: 'Science' },
     { id: 'sub3', name: 'English' },
     { id: 'sub4', name: 'Social Studies' }
   ];
   
-  const availableQuizzes: AvailableQuiz[] = [
+  const availableQuizzes = [
     { 
       id: 'quiz1', 
       title: 'Algebra Mid-Term Quiz', 
@@ -110,7 +59,7 @@ const Quizzes = () => {
     }
   ];
   
-  const completedQuizzes: CompletedQuiz[] = [
+  const completedQuizzes = [
     { 
       id: 'quiz4', 
       title: 'Geometry Quiz', 
@@ -135,7 +84,7 @@ const Quizzes = () => {
     }
   ];
   
-  const allStudentQuizzes: TeacherQuiz[] = [
+  const allStudentQuizzes = [
     { 
       id: 'quiz1', 
       title: 'Algebra Mid-Term Quiz', 
@@ -183,7 +132,7 @@ const Quizzes = () => {
   ];
 
   // Sample quiz questions
-  const sampleQuizQuestions: QuizQuestion[] = [
+  const sampleQuizQuestions = [
     {
       id: 1,
       question: "What is the value of x in the equation 2x + 5 = 13?",
@@ -219,14 +168,14 @@ const Quizzes = () => {
     }
   ];
 
-  const handleStartQuiz = (quizId: string) => {
+  const handleStartQuiz = (quizId) => {
     setSelectedQuiz(quizId);
     setQuizInProgress(true);
     setCurrentQuestion(0);
     setSelectedAnswers({});
   };
 
-  const handleAnswerSelect = (questionId: number, optionId: string) => {
+  const handleAnswerSelect = (questionId, optionId) => {
     setSelectedAnswers({
       ...selectedAnswers,
       [questionId]: optionId

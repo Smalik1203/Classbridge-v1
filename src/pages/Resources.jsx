@@ -98,7 +98,7 @@ const Resources = () => {
     return matchesSearch && matchesSubject && matchesClass;
   });
 
-  const handleDownloadResource = (resourceId: string) => {
+  const handleDownloadResource = (resourceId) => {
     console.log(`Downloading resource ${resourceId}`);
     // In a real app, this would initiate a file download
   };
